@@ -4,32 +4,35 @@ app = Flask(__name__)
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Date, Event
-from datetime import date
 
 engine = create_engine('sqlite:///calendarevents.db')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-#temporary data
-tempdate = {'year': 2018, 'id': 1, 'month': 2, 'month_name': 'February', 'date': 2, 'day': 'Monday'}
 
 @app.route('/')
-@app.route('/calendates/')
+@app.route('/calendates/', methods=['GET', 'POST'])
 def homePage():
-	return render_template('homepage.html')
+	# filter to first of January for each year so one object with each is obtained. then use the year column to list out all the years in the database.
+	obj_with_each_year = session.query(Date).filter(Date.date == 1, Date.month == 1).all()
+	return render_template('homepage.html', years = obj_with_each_year)
 
-@app.route('/calendates/<int:date_year>/')
-def year(date_year):
-	return render_template('year.html', date = tempdate)
+@app.route('/calendates/<int:year>/', methods=['GET', 'POST'])
+def year(year):
+	months = session.query(Date).filter_by(year = year, date = 1).all()
+	return render_template('year.html', year = year, months = months)
 
-@app.route('/calendates/<int:date_year>/<int:date_month>/')
-def month(date_year, date_month):
-	return render_template('month.html', date = tempdate)
+@app.route('/calendates/<int:year>/<int:month>/', methods=['GET', 'POST'])
+def month(year, month):
+	monthobj = session.query(Date).filter_by(month = month).first()
+	dates = session.query(Date).filter_by(year = year, month = month).all()
+	return render_template('month.html', year=year, monthobj=monthobj, dates=dates)
 
-@app.route('/calendates/<int:date_year>/<int:date_month>/<int:date_date>')
-def date(date_year, date_month, date_date):
-	return render_template('date.html', date = tempdate)
+@app.route('/calendates/<int:year>/<int:month>/<int:date>', methods=['GET', 'POST'])
+def date(year, month, date):
+	date = session.query(Date).filter_by(year=year, month=month, date=date).one()
+	return render_template('date.html', date = date)
 
 ## For running website on localhost:5000 in debug mode (automatic refresh of webserver on file save)
 if __name__ == '__main__':

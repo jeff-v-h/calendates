@@ -4,6 +4,11 @@
 	<title>Calendates</title>
 </head>
 <body>
+	<h1>Calendates</h1>
 	Calendar to share with your family or friends to notify of important common dates and events
+	<h2>List of years</h2>
+	{% for yearobj in years %}
+		<a href="{{url_for('year', year = yearobj.year)}}">{{yearobj.year}}</a><br>
+	{% endfor %}
 </body>
 </html>

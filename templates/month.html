@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{date.month_name}} {{date.year}}</title>
+	<title>{{monthobj.month_name}} {{year}}</title>
 </head>
 <body>
-	List of Months
+	<h1>{{monthobj.month_name}} {{year}}</h1>
+	<h2>List of dates</h2>
+	{% for date in dates %}
+		<a href="{{url_for('date', year=year, month=monthobj.month, date=date.date)}}">{{date.day}} {{date.date}}</a><br>
+	{% endfor %}
 </body>
 </html>
