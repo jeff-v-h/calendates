@@ -8,7 +8,7 @@
 	
 	<form action="{{url_for('newEvent')}}" method="post" id="new-event">
 		<label for="name">Name</label>
-		<input type="text" name="name">
+		<input type="text" name="name"><br>
 		<label for="year">Year</label>
 		<input type="number" name="year" maxlength="4">
 		<label for="month-name">Month</label>
@@ -31,13 +31,19 @@
 			{% for x in range(1,32) %}
 			<option value="{{(x)}}">{{(x)}}</option>
 			{% endfor %}
-		</select>
-		<label for="description">Description</label>
-		<textarea name="description" form="new-event" maxlength="1000"></textarea>
+		</select><br>
+		<div id="description-container">
+			<div id="description-label-wrapper">
+				<div><label for="description">Description</label></div>
+			</div>
+			<textarea name="description" form="new-event" maxlength="1000"></textarea>
+		</div>
+		
+		<br>
 		<label for="country">Country</label>
 		<input type="text" name="country">
 		<label for="city">City</label>
-		<input type="text" name="city">
+		<input type="text" name="city"><br>
 		<button>Create</button>
 	</form>
 	
