@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>{{date.date}} {{date.month_name}} {{date.year}}</title>
-</head>
-<body>
-	<h1>{{date.date}} {{date.month_name}} {{year}}</h1>
-	Day: {{date.day}}
+{% extends "layout.html" %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+{% block title %}{{date.date}} {{date.month_name}} {{date.year}}{% endblock %}
+{% block heading %}{{date.date}} {{date.month_name}} {{date.year}}{% endblock %}
+{% block main %}
 	<h2>List of Events</h2>
+{% endblock %}
 	
-</body>
-</html>

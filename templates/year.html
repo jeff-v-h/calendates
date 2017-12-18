@@ -1,13 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>{{year}}</title>
-</head>
-<body>
-	<h1>{{year}}</h1>
+{% extends "layout.html" %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+{% block title %} {{year}} {% endblock %}
+{% block heading %} {{year}} {% endblock %}
+{% block main %}
+
 	<h2>List of months</h2>
 	{% for monthobj in months %}
 		<a href="{{url_for('month', year=year, month=monthobj.month)}}">{{monthobj.month_name}}</a><br>
 	{% endfor %}
-</body>
-</html>
+
+{% endblock %}
