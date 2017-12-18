@@ -19,10 +19,13 @@ class Date(Base):
 	events = relationship('Event', backref='date', lazy=True)
 
 class Event(Base):
-	__tablename__ = 'month'
+	__tablename__ = 'event'
 	id = Column(Integer, primary_key=True)
 	name = Column(String(100), nullable=False)
 	date_id = Column(Integer, ForeignKey('date.id'), nullable=False)
+	description = Column(String(1000))
+	country = Column(String(50))
+	city = Column(String(50))
 
 
 engine = create_engine('sqlite:///calendarevents.db')

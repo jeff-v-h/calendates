@@ -6,11 +6,13 @@
 {% block heading %} New Event {% endblock %}
 {% block main %}
 	
-	<form>
+	<form action="{{url_for('newEvent')}}" method="post" id="new-event">
+		<label for="name">Name</label>
+		<input type="text" name="name">
 		<label for="year">Year</label>
 		<input type="number" name="year" maxlength="4">
-		<label for="month">Month</label>
-		<select name="month">
+		<label for="month-name">Month</label>
+		<select name="month-name">
 			<option value="January">January</option>
 			<option value="February">February</option>
 			<option value="March">March</option>
@@ -30,7 +32,13 @@
 			<option value="{{(x)}}">{{(x)}}</option>
 			{% endfor %}
 		</select>
-		
+		<label for="description">Description</label>
+		<textarea name="description" form="new-event" maxlength="1000"></textarea>
+		<label for="country">Country</label>
+		<input type="text" name="country">
+		<label for="city">City</label>
+		<input type="text" name="city">
+		<button>Create</button>
 	</form>
 	
 {% endblock %}

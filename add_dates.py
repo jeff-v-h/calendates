@@ -10,6 +10,7 @@ session = DBSession()
 
 #function to add dates for whole year. Input the year and the day for the 1st of that year (eg. 'Monday')
 def createMonthsForYear(year, day):
+	print "Adding year " + str(year) + " to database."
 	for x in range(1, 13):
 		day = createDatesForMonth(year, (x), day)
 	print "Added year " + str(year)
@@ -92,3 +93,4 @@ def getMonthName(month):
 createMonthsForYear(2018, 'Monday')
 createMonthsForYear(2019, 'Tuesday')
 createMonthsForYear(2020, 'Wednesday')
+print "Completed."

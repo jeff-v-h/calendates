@@ -40,7 +40,18 @@ def events():
 
 @app.route('/calendates/newevent/', methods=['GET', 'POST'])
 def newEvent():
-	return render_template('newevent.html')
+	if request.method == 'POST':
+		date = session.query(Date).filter_by(year=request.form['year'], month_name=request.form['month-name'], date=request.form['date']).one()
+		if date:
+			event = Event(name=request.form['name'], date_id=date.id, description=request.form['description'], country=request.form['country'], city=request.form['city'])
+			session.add(event)
+			session.commit()
+			print event
+			return redirect(url_for('date', year=date.year, month=date.month, date=date.date))
+		else:
+			print "date not found, try a proper date"
+	else:
+		return render_template('newevent.html')
 
 @app.route('/calendates/about/', methods=['GET', 'POST'])
 def about():
