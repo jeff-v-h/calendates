@@ -12,13 +12,13 @@
 	<div id="wrapper">
 		<header>
 			<div id="home-btn">
-				Calendates
+				<a href="{{url_for('homePage')}}">Calendates</a>
 			</div>
 			<div id="navigation">
-				<div>About</div>
-				<div>Calendar</div>
-				<div>Events</div>
-				<div>Contact</div>
+				<a href="{{url_for('about')}}"><div>About</div></a>
+				<a href="{{url_for('homePage')}}"><div>Calendar</div></a>
+				<a href="{{url_for('events')}}"><div>Events</div></a>
+				<a href="{{url_for('contact')}}"><div>Contact</div></a>
 			</div>
 		</header>
 		<div id="content">
