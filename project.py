@@ -32,11 +32,13 @@ def month(year, month):
 @app.route('/calendates/<int:year>/<int:month>/<int:date>/', methods=['GET', 'POST'])
 def date(year, month, date):
 	date = session.query(Date).filter_by(year=year, month=month, date=date).one()
-	return render_template('date.html', date = date)
+	events = session.query(Event).filter_by(date_id = date.id).all()
+	return render_template('date.html', date = date, events=events)
 
 @app.route('/calendates/events/', methods=['GET', 'POST'])
 def events():
-	return render_template('events.html')
+	events = session.query(Event, Date).filter(Event.date_id==Date.id).all()
+	return render_template('events.html', events=events)
 
 @app.route('/calendates/newevent/', methods=['GET', 'POST'])
 def newEvent():

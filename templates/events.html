@@ -6,6 +6,13 @@
 {% block heading %} Major Events {% endblock %}
 {% block main %}
 	
-	<div>List of Major events</div>
+	{% for event in events %}
+	<div><a href="#">{{event[0].name}}</a>: {{event[1].day}} {{event[1].date}}{% if event[1].date == 1 %}st
+		{% elif event[1].date == 2 %}nd
+		{% elif event[1].date == 3 %}rd
+		{% else %}th
+		{% endif %}
+		of {{event[1].month_name}} {{event[1].year}}</div>
+	{% endfor %}
 	
 {% endblock %}

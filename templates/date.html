@@ -6,5 +6,11 @@
 {% block heading %}{{date.date}} {{date.month_name}} {{date.year}}{% endblock %}
 {% block main %}
 	<h2>List of Events</h2>
+	<ul>
+		{% for event in events %}
+		<a href="#"><li>{{event.name}}</li></a>
+		{% endfor %}
+	</ul>
+	
 {% endblock %}
 	
