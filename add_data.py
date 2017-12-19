@@ -1,4 +1,4 @@
-from database_setup import db, Date, Event, event_dates
+from database_setup import db, Date, Event, events_dates
 
 
 #function to add dates for whole year. Input the year and the day for the 1st of that year (eg. 'Monday')
@@ -87,50 +87,35 @@ def createPublicHolidays2018():
 	newYearsDayDate = Date.query.filter_by(year=2018, month=1, date=1).one()
 	newYearsDay = Event(name="New Year's Day", description='The day after the new year.', country='England', city='London')
 	newYearsDayDate.events.append(newYearsDay)
-	newYearsDay.dates.append(newYearsDayDate)
-	db.session.add(newYearsDay)
 
 	goodFriDate = Date.query.filter_by(year=2018, month=3, date=30).one()
 	goodFri = Event(name="Good Friday", description='Friday for Easter', country='England', city='London')
 	goodFriDate.events.append(goodFri)
-	goodFri.dates.append(goodFriDate)
-	db.session.add(goodFri)
 
 	easterMonDate = Date.query.filter_by(year=2018, month=4, date=2).one()
 	easterMon = Event(name='Easter Monday', description='The Monday during Easter', country='England', city='London')
 	easterMonDate.events.append(easterMon)
-	easterMon.dates.append(easterMonDate)
-	db.session.add(easterMon)
 
 	earlyMayBankDate = Date.query.filter_by(year=2018, month=5, date=7).one()
 	earlyMayBank = Event(name='Early May Bank Holiday', description='Bank holiday for early May', country='England', city='London')
 	earlyMayBankDate.events.append(earlyMayBank)
-	earlyMayBank.dates.append(earlyMayBankDate)
-	db.session.add(earlyMayBank)
 
 	springBankDate = Date.query.filter_by(year=2018, month=5, date=28).one()
 	springBank = Event(name='Spring Bank Holiday', description='Bank holiday for Spring', country='England', city='London')
 	springBankDate.events.append(springBank)
-	springBank.dates.append(springBankDate)
-	db.session.add(springBank)
 
 	summerHolDate = Date.query.filter_by(year=2018, month=8, date=27).one()
 	summerHol = Event(name='Summer Bank Holiday', description='A public holiday in Summer for banks', country='England', city='London')
 	summerHolDate.events.append(summerHol)
-	summerHol.dates.append(summerHolDate)
-	db.session.add(summerHol)
 
 	xmasDayDate = Date.query.filter_by(year=2018, month=12, date=25).one()
 	xmasDay = Event(name='Christmas Day', description='Christmas is here!', country='England', city='London')
 	xmasDayDate.events.append(xmasDay)
-	xmasDay.dates.append(xmasDayDate)
-	db.session.add(xmasDay)
 
 	boxingDayDate = Date.query.filter_by(year=2018, month=12, date=26).one()
 	boxingDay = Event(name='Boxing Day', description='The day after Christmas', country='England', city='London')
 	boxingDayDate.events.append(boxingDay)
-	boxingDay.dates.append(boxingDayDate)
-	db.session.add(boxingDay)
+
 	db.session.commit()
 	print "Added 2018 London public holidays."
 

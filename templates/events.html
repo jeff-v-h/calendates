@@ -7,12 +7,7 @@
 {% block main %}
 	
 	{% for event in events %}
-	<div><a href="#">{{event.name}}</a>: {{event.day}} {{event.date}}{% if event.date == 1 %}st
-		{% elif event.date == 2 %}nd
-		{% elif event.date == 3 %}rd
-		{% else %}th
-		{% endif %}
-		of {{event.month_name}} {{event.year}}</div>
+	<div><a href="#">{{event.name}}</a></div>
 	{% endfor %}
 	
 {% endblock %}

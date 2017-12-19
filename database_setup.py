@@ -2,40 +2,38 @@ import os
 import sys
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Table, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
-
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///calendarevents.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-event_dates = db.Table('event_dates',
-	Column('date_id', Integer, ForeignKey('date.id')),
-	Column('event_id', Integer, ForeignKey('event.id'))
+events_dates = db.Table('events_dates',
+	db.Column('date_id', db.Integer, db.ForeignKey('date.id'), primary_key=True),
+	db.Column('event_id', db.Integer, db.ForeignKey('event.id'), primary_key=True)
 )
 
 class Date(db.Model):
 	__tablename__ = 'date'
-	id = Column(Integer, primary_key=True)
-	year = Column(Integer) #?? nullable since some events may not know exact date yet 
-	month = Column(Integer)
-	month_name = Column(String(9))
-	date = Column(Integer)
-	day = Column(String(8))
-	events = relationship('Event', secondary=event_dates, backref='dates')
+	id = db.Column(db.Integer, primary_key=True)
+	year = db.Column(db.Integer) #?? nullable since some events may not know exact date yet 
+	month = db.Column(db.Integer)
+	month_name = db.Column(db.String(9))
+	date = db.Column(db.Integer)
+	day = db.Column(db.String(8))
+	events = db.relationship('Event', secondary=events_dates, lazy='subquery', backref=db.backref('dates'))
 
 	def __repr__(self):
-		return '<User %r>' % self.id
+		return '<Date %r, %r, %r>' % (self.year, self.month_name, self.date)
 
 class Event(db.Model):
 	__tablename__ = 'event'
-	id = Column(Integer, primary_key=True)
-	name = Column(String(100), nullable=False)
-	description = Column(String(1000))
-	country = Column(String(50))
-	city = Column(String(50))
+	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.String(100), nullable=False)
+	description = db.Column(db.String(1000))
+	country = db.Column(db.String(50))
+	city = db.Column(db.String(50))
 
 	def __repr__(self):
 		return '<Event %r>' % self.name

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from database_setup import db, Date, Event, event_dates
+from database_setup import db, Date, Event, events_dates
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///calendarevents.db'
@@ -29,14 +29,12 @@ def month(year, month):
 @app.route('/calendates/<int:year>/<int:month>/<int:date>/', methods=['GET', 'POST'])
 def date(year, month, date):
 	date = Date.query.filter_by(year=year, month=month, date=date).one()
-	events = Event.query.all()
+	events = Event.query.filter(Event.dates.contains(date)).all()
 	return render_template('date.html', date=date, events=events)
 
 @app.route('/calendates/events/', methods=['GET', 'POST'])
 def events():
-	events = Event.query.join(event_dates).join(Date).filter(event_dates.c.event_id==Event.id and event_dates.c.date_id==Date.id).all()
-	print events
-	#events = session.query(Event, Date, event_dates).filter(Event.date_id==Date.id).all()
+	events = Event.query.all()
 	return render_template('events.html', events=events)
 
 @app.route('/calendates/newevent/', methods=['GET', 'POST'])
