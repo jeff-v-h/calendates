@@ -119,9 +119,65 @@ def createPublicHolidays2018():
 	db.session.commit()
 	print "Added 2018 London public holidays."
 
+def addSportEvents2018():
+	ausOpen = Event(name='Australian Open', description='The first of four tennis grand slam tournamnets each year held in Australia.', country='Australia', city='Melbourne')
+	for x in range(15, 29):
+		date = Date.query.filter_by(year=2018, month=1, date=(x)).one()
+		ausOpen.dates.append(date)
+
+	commonwealthGames = Event(name='Commonwealth Games', description='Sporting event between elite athletes of countries from the Commonwealth.', country='Australia', city='Gold Coast')
+	for x in range(4, 16):
+		date = Date.query.filter_by(year=2018, month=4, date=(x)).one()
+		commonwealthGames.dates.append(date)
+
+	faCupFinal = Event(name='FA Cup Final', description='The final match of the Football Association Challenge Cup', country='England', city='London')
+	date = Date.query.filter_by(year=2018, month=5, date=19).one()
+	faCupFinal.dates.append(date)
+
+	uefaChampsFinal = Event(name='UEFA Champions League Final', description='The final game i the UEFA Champions League', country='Ukraine', city='Kiev')
+	date = Date.query.filter_by(year=2018, month=5, date=26).one()
+	uefaChampsFinal.dates.append(date)
+
+	frenchOpen = Event(name='Roland-Garros', description='Also known as The French Open, this tennis grand slam is held on courts with clay surfaces.', country='France', city='Paris')
+	for x in range(27, 32):
+		date = Date.query.filter_by(year=2018, month=5, date=(x)).one()
+		frenchOpen.dates.append(date)
+	for x in range(1, 11):
+		date = Date.query.filter_by(year=2018, month=6, date=(x)).one()
+		frenchOpen.dates.append(date)
+
+	fifaWorldCup = Event(name='FIFA World Cup', description="The World's most watched global sporting event held every four years.", country='Russia', city='')
+	for x in range(14, 31):
+		date = Date.query.filter_by(year=2018, month=6, date=(x)).one()
+		fifaWorldCup.dates.append(date)
+	for x in range(1, 16):
+		date = Date.query.filter_by(year=2018, month=7, date=(x)).one()
+		fifaWorldCup.dates.append(date)
+
+	nbaFinalsStart = Event(name='NBA Finals (start)', description='The start of the American National Basketball League finals series.', country='USA', city='')
+	date = Date.query.filter_by(year=2018, month=5, date=31).one()
+	nbaFinalsStart.dates.append(date)
+	
+	tourDeFrance = Event(name='Tour De France', description='The biggest multistage outdoor cycling competition held in France every year.', country='France', city='')
+	for x in range(7, 30):
+		date = Date.query.filter_by(year=2018, month=7, date=(x)).one()
+		tourDeFrance.dates.append(date)
+
+	wimbledon = Event(name='Wimbledon', description='The last of four tennis grand slam tournamnets each year held in Wimbledon, England.', country='England', city='London')
+	for x in range(2, 16):
+		date = Date.query.filter_by(year=2018, month=7, date=(x)).one()
+		wimbledon.dates.append(date)
+
+	melbourneCup = Event(name='Melbourne Cup', description='A major horse racing event held in Melbourne Australia', country='Australia', city='Melbourne')
+	date = Date.query.filter_by(year=2018, month=11, date=6).one()
+	melbourneCup.dates.append(date)
+
+	db.session.commit()
+	print "Added 2018 sport events."
 
 print "Adding data to database..."
 createMonthsForYear(2018, 'Monday')
 createMonthsForYear(2019, 'Tuesday')
 createPublicHolidays2018()
+addSportEvents2018()
 print "Completed."
