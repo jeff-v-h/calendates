@@ -34,7 +34,7 @@ def date(year, month, date):
 
 @app.route('/calendates/events/', methods=['GET', 'POST'])
 def events():
-	events = Event.query.all()
+	events = Event.query.join(Date.events).order_by(Date.year.asc()).order_by(Date.month.asc()).order_by(Date.date.asc()).all()
 	return render_template('events.html', events=events)
 
 @app.route('/calendates/newevent/', methods=['GET', 'POST'])
