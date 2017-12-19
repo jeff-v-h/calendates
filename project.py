@@ -23,7 +23,7 @@ def year(year):
 @app.route('/calendates/<int:year>/<int:month>/', methods=['GET', 'POST'])
 def month(year, month):
 	monthobj = Date.query.filter_by(month = month).first()
-	dates = Date.query.filter_by(year = year, month = month).all()
+	dates = Date.query.join(Event.dates).filter_by(year=year, month=month).all()
 	return render_template('month.html', year=year, monthobj=monthobj, dates=dates)
 
 @app.route('/calendates/<int:year>/<int:month>/<int:date>/', methods=['GET', 'POST'])

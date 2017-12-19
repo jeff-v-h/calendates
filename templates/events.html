@@ -3,11 +3,16 @@
 	{{ super() }}
 {% endblock %}
 {% block title %} Events {% endblock %}
-{% block heading %} Major Events {% endblock %}
+{% block heading %} Major Events & Holidays {% endblock %}
 {% block main %}
 	
 	{% for event in events %}
-	<div><a href="#">{{event.name}}</a></div>
+	<div>
+		<a href="#">{{event.name}}:</a> {{event.dates[0].date}} {{event.dates[0].month_name}} 
+		{% if event.dates[1] %}
+		 - {{event.dates[-1].date}} {{event.dates[-1].month_name}}
+		{% endif %}
+	</div>
 	{% endfor %}
 	
 {% endblock %}

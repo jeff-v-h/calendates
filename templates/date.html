@@ -8,7 +8,12 @@
 	<h2>List of Events</h2>
 	<ul>
 		{% for event in events %}
-		<a href="#"><li>{{event.name}} {{event.dates}}</li></a>
+		<li><a href="#">{{event.name}}:</a>
+			{{event.dates[0].date}} {{event.dates[0].month_name}} 
+			{% if event.dates[1] %}
+			 - {{event.dates[-1].date}} {{event.dates[-1].month_name}}
+			{% endif %}
+		</li>
 		{% endfor %}
 	</ul>
 	
