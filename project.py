@@ -42,8 +42,8 @@ def newEvent():
 	if request.method == 'POST':
 		date = Date.query.filter_by(year=request.form['year'], month_name=request.form['month-name'], date=request.form['date']).one()
 		if date:
-			event = Event(name=request.form['name'], date_id=date.id, description=request.form['description'], country=request.form['country'], city=request.form['city'])
-			db.session.add(event)
+			event = Event(name=request.form['name'], description=request.form['description'], country=request.form['country'], city=request.form['city'])
+			date.events.append(event)
 			db.session.commit()
 			print event
 			return redirect(url_for('date', year=date.year, month=date.month, date=date.date))
