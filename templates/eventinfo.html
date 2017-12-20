@@ -95,7 +95,10 @@
 			</div>
 			<button>Save</button>
 		</form>
-		<button type="button" id="edit-btn">Edit</button>
+		<div id="edit-div">
+			<button type="button" id="edit-btn">Edit</button>
+			<a href="{{url_for('deleteEvent', event_id=event.id)}}"><button type="button" id="delete-btn">Delete</button></a>
+		</div>	
 	</div>
 	
 {% endblock %}

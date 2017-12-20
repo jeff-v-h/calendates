@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+{% block title %} Delete {{event.name}} {% endblock %}
+{% block heading %} {{event.name}} {% endblock %}
+{% block main %}
+	<div>Are you sure you want to delete {{event.name}}?</div>
+	<div>WARNING: This action is irreversible!!</div>
+	<form action="{{url_for('deleteEvent', event_id=event.id)}}" method="post">
+		<button>Delete</button>
+	</form>
+	<a href="{{url_for('eventInfo', event_id=event.id)}}"><button>Cancel</button></a>
+{% endblock %}

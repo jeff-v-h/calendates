@@ -4,38 +4,38 @@ from flask import Flask, render_template, request, redirect, url_for
 from database_setup import Date, Event, events_dates
 
 @app.route('/')
-@app.route('/calendates/', methods=['GET', 'POST'])
+@app.route('/calendates/', methods=['GET'])
 def homePage():
 	# filter to first of January for each year so one object with each is obtained. then use the year column to list out all the years in the database.
 	obj_with_each_year = Date.query.filter(Date.date == 1, Date.month == 1).all()
 	return render_template('homepage.html', years = obj_with_each_year)
 
-@app.route('/calendates/about/', methods=['GET', 'POST'])
+@app.route('/calendates/about/', methods=['GET'])
 def about():
 	return render_template('about.html')
 
-@app.route('/calendates/contact/', methods=['GET', 'POST'])
+@app.route('/calendates/contact/', methods=['GET'])
 def contact():
 	return render_template('contact.html')
 
-@app.route('/calendates/<int:year>/', methods=['GET', 'POST'])
+@app.route('/calendates/<int:year>/', methods=['GET'])
 def year(year):
 	months = Date.query.filter_by(year = year, date = 1).all()
 	return render_template('year.html', year = year, months = months)
 
-@app.route('/calendates/<int:year>/<int:month>/', methods=['GET', 'POST'])
+@app.route('/calendates/<int:year>/<int:month>/', methods=['GET'])
 def month(year, month):
 	monthobj = Date.query.filter_by(month = month).first()
 	dates = Date.query.join(Event.dates).filter_by(year=year, month=month).all()
 	return render_template('month.html', year=year, monthobj=monthobj, dates=dates)
 
-@app.route('/calendates/<int:year>/<int:month>/<int:date>/', methods=['GET', 'POST'])
+@app.route('/calendates/<int:year>/<int:month>/<int:date>/', methods=['GET'])
 def date(year, month, date):
 	date = Date.query.filter_by(year=year, month=month, date=date).one()
 	events = Event.query.filter(Event.dates.contains(date)).all()
 	return render_template('date.html', date=date, events=events)
 
-@app.route('/calendates/events/', methods=['GET', 'POST'])
+@app.route('/calendates/events/', methods=['GET'])
 def events():
 	events = Event.query.join(Date.events).order_by(Date.year.asc()).order_by(Date.month.asc()).order_by(Date.date.asc()).all()
 	return render_template('events.html', events=events)
@@ -65,7 +65,6 @@ def newEvent():
 								allSame = True
 							else:
 								year, month, date = getNextDate(year, month, date)
-						event.dates = [] #needed to get rid of all dates, otherwise if overlap will cause dates not to be in order.
 						event.dates = newDates
 					else:
 						print "You need to make sure the 2nd date is after the first"
@@ -114,7 +113,6 @@ def eventInfo(event_id):
 								allSame = True
 							else:
 								year, month, date = getNextDate(year, month, date)
-						event.dates = [] #needed to get rid of all dates, otherwise if overlap will cause dates not to be in order.
 						event.dates = newDates
 					else:
 						print "You need to make sure the 2nd date is after the first"
@@ -132,6 +130,16 @@ def eventInfo(event_id):
 			return
 	else: 
 		return render_template('eventinfo.html', event=event)
+
+@app.route('/calendates/events/<int:event_id>/delete/', methods=['GET', 'POST'])
+def deleteEvent(event_id):
+	event = Event.query.filter_by(id=event_id).one()
+	if request.method == 'POST':
+		db.session.delete(event)
+		db.session.commit()
+		return redirect(url_for('events'))
+	else:
+		return render_template('deleteevent.html', event=event)
 
 # function to check if 2nd date is after first 
 def checkDates(year1, month1, date1, year2, month2, date2):

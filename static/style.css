@@ -74,9 +74,14 @@ label {
 	flex-grow: 5;
 }
 
-#edit-btn {
+#edit-div {
 	flex-grow: 1;
-	height: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+#edit-div button {
+	margin-top: 10px;
 }
 
 #edit-event {

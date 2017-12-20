@@ -67,15 +67,15 @@ def getMonthName(month):
 ''' Functions to create Events once Dates have been added '''
 def createPublicHolidays2018():
 	newYearsDayDate = Date.query.filter_by(year=2018, month=1, date=1).one()
-	newYearsDay = Event(name="New Year's Day", description='The day after the new year.', country='England', city='London')
+	newYearsDay = Event(name="New Year's Day", description='The day after the new year.')
 	newYearsDayDate.events.append(newYearsDay)
 
 	goodFriDate = Date.query.filter_by(year=2018, month=3, date=30).one()
-	goodFri = Event(name="Good Friday", description='Friday for Easter', country='England', city='London')
+	goodFri = Event(name="Good Friday", description='Friday for Easter')
 	goodFriDate.events.append(goodFri)
 
 	easterMonDate = Date.query.filter_by(year=2018, month=4, date=2).one()
-	easterMon = Event(name='Easter Monday', description='The Monday during Easter', country='England', city='London')
+	easterMon = Event(name='Easter Monday', description='The Monday during Easter')
 	easterMonDate.events.append(easterMon)
 
 	earlyMayBankDate = Date.query.filter_by(year=2018, month=5, date=7).one()
@@ -91,11 +91,11 @@ def createPublicHolidays2018():
 	summerHolDate.events.append(summerHol)
 
 	xmasDayDate = Date.query.filter_by(year=2018, month=12, date=25).one()
-	xmasDay = Event(name='Christmas Day', description='Christmas is here!', country='England', city='London')
+	xmasDay = Event(name='Christmas Day', description='Christmas is here!')
 	xmasDayDate.events.append(xmasDay)
 
 	boxingDayDate = Date.query.filter_by(year=2018, month=12, date=26).one()
-	boxingDay = Event(name='Boxing Day', description='The day after Christmas', country='England', city='London')
+	boxingDay = Event(name='Boxing Day', description='The day after Christmas')
 	boxingDayDate.events.append(boxingDay)
 
 	db.session.commit()
