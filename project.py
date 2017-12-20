@@ -15,6 +15,14 @@ def homePage():
 	obj_with_each_year = Date.query.filter(Date.date == 1, Date.month == 1).all()
 	return render_template('homepage.html', years = obj_with_each_year)
 
+@app.route('/calendates/about/', methods=['GET', 'POST'])
+def about():
+	return render_template('about.html')
+
+@app.route('/calendates/contact/', methods=['GET', 'POST'])
+def contact():
+	return render_template('contact.html')
+
 @app.route('/calendates/<int:year>/', methods=['GET', 'POST'])
 def year(year):
 	months = Date.query.filter_by(year = year, date = 1).all()
@@ -52,13 +60,104 @@ def newEvent():
 	else:
 		return render_template('newevent.html')
 
-@app.route('/calendates/about/', methods=['GET', 'POST'])
-def about():
-	return render_template('about.html')
+@app.route('/calendates/events/<int:event_id>/', methods=['GET', 'POST'])
+def eventInfo(event_id):
+	event = Event.query.filter_by(id=event_id).one()
+	if request.method == 'POST':
+		if request.form['name']:
+			event.name = request.form['name']
+			event.description = request.form['description']
+			event.country = request.form['country']
+			event.city = request.form['city']
+			year = request.form['year']
+			month = request.form['month']
+			date = request.form['date']
+			dateStart = Date.query.filter_by(year=year, month=month, date=date).one()
+			newDates = []
+			if dateStart: #make sure date is in database
+				if request.form.get('multiple-days', None): #change multiple dates
+					yearEnd = request.form['year-end']
+					monthEnd = request.form['month-end']
+					dateEnd = request.form['date-end']
+					dateIsAfter = checkDates(year, month, date, yearEnd, monthEnd, dateEnd)
+					if dateIsAfter:
+						while year!=yearEnd and month!=monthEnd and date!=dateEnd:
+							newDate = Date.query.filter_by(year=year, month=month, date=date).one()
+							newDates.append(newDate)
+							year, month, date = getNextDate(year, month, date)
+							print year, month, date
+						print newDates
+						event.dates = newDates
+					else:
+						print "You need to make sure the 2nd date is after the first"
+				else: #just change 1 date
+					newDates.append(dateStart)
+					event.dates = newDates
+			else:
+				print "date not found, try a proper date. date not changed"
+			print "got to right before session.add"
+			db.session.add(event)
+			#db.session.commit()
+			print "Event info changed"
+			return redirect(url_for('events'))
+		else:
+			print "Event must have a name"
+			return
+	else: 
+		return render_template('eventinfo.html', event=event)
 
-@app.route('/calendates/contact/', methods=['GET', 'POST'])
-def contact():
-	return render_template('contact.html')
+# function to check if 2nd date is after first 
+def checkDates(year1, month1, date1, year2, month2, date2):
+	if year2 > year1:
+		return True
+	elif year2 == year1:
+		if month2 > month1:
+			return True
+		elif month2 == month1:
+			if date2 > date1:
+				return True
+			return False
+		else:
+			return False
+	else: 
+		return False
+
+# function to return the next date
+def getNextDate(year, month, date):
+	daysInMonth = getDaysInMonth(month, year)
+	if date < daysInMonth:
+		date += 1
+	elif date==daysInMonth:
+		date = 1
+		if month==12:
+			year += 1
+			month = 1
+		else:
+			month += 1
+	else:
+		print "date given/below is larger than the amount of days in this month"
+		print year, month, date
+		return
+	return year, month, date
+
+def getDaysInMonth(month, year):
+	if month < 1 or month > 12:
+		print "month needs to be between from 1 to 12"
+		print month
+		return month
+	elif month == 2:
+		if year%4 == 0:
+			if year%100 == 0 and year%400 == 0:
+				return 29
+			elif year%100 == 0:
+				return 28
+			else:
+				return 29
+		else: return 28
+	elif month in [4, 6, 9, 11]:
+		return 30
+	else:
+		return 31
 
 ## For running website on localhost:5000 in debug mode (automatic refresh of webserver on file save)
 if __name__ == '__main__':

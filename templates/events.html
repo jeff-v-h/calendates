@@ -8,7 +8,7 @@
 	
 	{% for event in events %}
 	<div>
-		<a href="#">{{event.name}}:</a> {{event.dates[0].date}} {{event.dates[0].month_name}} 
+		<a href="{{url_for('eventInfo', event_id=event.id)}}">{{event.name}}:</a> {{event.dates[0].date}} {{event.dates[0].month_name}} 
 		{% if event.dates[1] %}
 		 - {{event.dates[-1].date}} {{event.dates[-1].month_name}}
 		{% endif %}

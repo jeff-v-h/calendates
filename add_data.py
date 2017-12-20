@@ -1,5 +1,5 @@
 from database_setup import db, Date, Event, events_dates
-
+from project import getDaysInMonth
 
 #function to add dates for whole year. Input the year and the day for the 1st of that year (eg. 'Monday')
 def createMonthsForYear(year, day):
@@ -18,25 +18,6 @@ def createDatesForMonth(year, month, day):
 		db.session.commit()
 		day = getNextDay(day)
 	return day
-
-def getDaysInMonth(month, year):
-	if month < 1 or month > 12:
-		print "month needs to be between from 1 to 12"
-		print month
-		return month
-	elif month == 2:
-		if year%4 == 0:
-			if year%100 == 0 and year%400 == 0:
-				return 29
-			elif year%100 == 0:
-				return 28
-			else:
-				return 29
-		else: return 28
-	elif month in [4, 6, 9, 11]:
-		return 30
-	else:
-		return 31
 
 #helper method to get next day
 def getNextDay(day):
@@ -134,7 +115,7 @@ def addSportEvents2018():
 	date = Date.query.filter_by(year=2018, month=5, date=19).one()
 	faCupFinal.dates.append(date)
 
-	uefaChampsFinal = Event(name='UEFA Champions League Final', description='The final game i the UEFA Champions League', country='Ukraine', city='Kiev')
+	uefaChampsFinal = Event(name='UEFA Champions League Final', description='The final game in the UEFA Champions League', country='Ukraine', city='Kiev')
 	date = Date.query.filter_by(year=2018, month=5, date=26).one()
 	uefaChampsFinal.dates.append(date)
 

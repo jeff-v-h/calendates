@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+{% block title %} {{event.name}} {% endblock %}
+{% block heading %} {{event.name}} {% endblock %}
+{% block main %}
+	<div id="event-info-wrapper">
+		<div>
+			<p>Name: {{event.name}}</p>
+			<p>
+				Date/s: {{event.dates[0].date}} {{event.dates[0].month_name}} 
+				{% if event.dates[1] %}
+				 - {{event.dates[-1].date}} {{event.dates[-1].month_name}}
+				{% endif %}
+			</p>
+			<p>Description: {{event.description}}</p>
+			{% if event.city or event.country %}
+			<p>Location: {% if event.city %}{{event.city}}, {% endif %}{{event.country}}</p>
+			{% endif %}
+		</div>
+		<button type="button">Edit</button>
+		<form action="{{url_for('eventInfo', event_id=event.id)}}" method="post" id="edit-event">
+			<div>
+				<label for="name">Name</label>
+				<input type="text" name="name" value="{{event.name}}">
+			</div>
+			<div>
+				<label for="year">Year</label>
+				<input type="number" name="year" maxlength="4" value="{{event.dates[0].year}}">
+				<label for="month">Month</label>
+				<select name="month">
+					{% if event.dates[0].month %}
+					<option value="{{event.dates[0].month}}">{{event.dates[0].month}}</option>
+					{% endif %}
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+				</select>
+				<label for="date">Date</label>
+				<select name="date">
+					{% for x in range(1,32) %}
+					{% if event.dates[0].date == (x) %}
+					<option value="{{(x)}}" selected>{{(x)}}</option>
+					{% else %}
+					<option value="{{(x)}}">{{(x)}}</option>
+					{% endif %}
+					{% endfor %}
+				</select>
+			</div>
+			<div>
+				<div>
+					Tick if multiple days <input type="checkbox" name="multiple-days">
+				</div>
+				<div>End date:</div>
+				<label for="year-end">Year</label>
+				<input type="number" name="year-end" maxlength="4" value="{{event.dates[0].year}}">
+				<label for="month-end">Month</label>
+				<select name="month-end">
+					{% if event.dates[-1].month %}
+					<option value="{{event.dates[-1].month}}">{{event.dates[-1].month}}</option>
+					{% endif %}
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+				</select>
+				<label for="date-end">Date</label>
+				<select name="date-end">
+					{% for x in range(1,32) %}
+					{% if event.dates[-1].date == (x) %}
+					<option value="{{(x)}}" selected>{{(x)}}</option>
+					{% else %}
+					<option value="{{(x)}}">{{(x)}}</option>
+					{% endif %}
+					{% endfor %}
+				</select>
+			</div>
+			<div>
+				<div>Description</div>
+				<textarea name="description" form="edit-event" maxlength="1000">{{event.description}}</textarea>
+			</div>
+			<div>
+				<label for="city">City</label>
+				<input type="text" name="city" value="{{event.city}}">
+				<label for="country">Country</label>
+				<input type="text" name="country" value="{{event.country}}">
+			</div>
+			<button>Save</button>
+		</form>
+	</div>
+	
+	
+{% endblock %}

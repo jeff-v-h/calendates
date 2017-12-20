@@ -8,7 +8,7 @@
 	<h2>List of Events</h2>
 	<ul>
 		{% for event in events %}
-		<li><a href="#">{{event.name}}:</a>
+		<li><a href="{{url_for('eventInfo', event_id=event.id)}}">{{event.name}}:</a>
 			{{event.dates[0].date}} {{event.dates[0].month_name}} 
 			{% if event.dates[1] %}
 			 - {{event.dates[-1].date}} {{event.dates[-1].month_name}}
