@@ -43,15 +43,45 @@ def events():
 @app.route('/calendates/newevent/', methods=['GET', 'POST'])
 def newEvent():
 	if request.method == 'POST':
-		date = Date.query.filter_by(year=request.form['year'], month_name=request.form['month-name'], date=request.form['date']).one()
-		if date:
+		if request.form['name']:
+			year = int(request.form['year'])
+			month = int(request.form['month'])
+			date = int(request.form['date'])
+			dateStart = Date.query.filter_by(year=year, month=month, date=date).one()
+			newDates = []
 			event = Event(name=request.form['name'], description=request.form['description'], country=request.form['country'], city=request.form['city'])
-			date.events.append(event)
+			if dateStart:
+				if request.form.get('multiple-days'): #change multiple dates
+					yearEnd = int(request.form['year-end'])
+					monthEnd = int(request.form['month-end'])
+					dateEnd = int(request.form['date-end'])
+					dateIsAfter = checkDates(year, month, date, yearEnd, monthEnd, dateEnd)
+					if dateIsAfter:
+						allSame = False
+						while not allSame:
+							newDate = Date.query.filter_by(year=year, month=month, date=date).one()
+							newDates.append(newDate)
+							if (year==yearEnd and month==monthEnd and date==dateEnd):
+								allSame = True
+							else:
+								year, month, date = getNextDate(year, month, date)
+						event.dates = [] #needed to get rid of all dates, otherwise if overlap will cause dates not to be in order.
+						event.dates = newDates
+					else:
+						print "You need to make sure the 2nd date is after the first"
+				else: #just change 1 date
+					print "multiple days not ticked"
+					newDates.append(dateStart)
+					event.dates = newDates
+			else:
+				print "date not found, try a proper date. date not changed"
+				return
+			db.session.add(event)
 			db.session.commit()
-			print event
-			return redirect(url_for('date', year=date.year, month=date.month, date=date.date))
+			return redirect(url_for('events'))
 		else:
-			print "date not found, try a proper date"
+			print "Event must have a name"
+			return	
 	else:
 		return render_template('newevent.html')
 

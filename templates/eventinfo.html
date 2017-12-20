@@ -6,7 +6,7 @@
 {% block heading %} {{event.name}} {% endblock %}
 {% block main %}
 	<div id="event-info-wrapper">
-		<div>
+		<div>{{event.dates}}
 			<p>Name: {{event.name}}</p>
 			<p>
 				Date/s: {{event.dates[0].date}} {{event.dates[0].month_name}} 
@@ -58,9 +58,9 @@
 				</select>
 			</div>
 			<div>
-				<div>
-					Tick if multiple days <input type="checkbox" name="multiple-days">
-				</div>
+				Tick if multiple days <input type="checkbox" name="multiple-days" id="end-date-checkbox">
+			</div>
+			<div id="end-date-container">
 				<div>End date:</div>
 				<label for="year-end">Year</label>
 				<input type="number" name="year-end" maxlength="4" value="{{event.dates[0].year}}">
@@ -69,18 +69,9 @@
 					{% if event.dates[-1].month %}
 					<option value="{{event.dates[-1].month}}">{{event.dates[-1].month}}</option>
 					{% endif %}
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-					<option value="6">6</option>
-					<option value="7">7</option>
-					<option value="8">8</option>
-					<option value="9">9</option>
-					<option value="10">10</option>
-					<option value="11">11</option>
-					<option value="12">12</option>
+					{% for x in range(1,13) %}
+					<option value="{{(x)}}">{{(x)}}</option>
+					{% endfor %}
 				</select>
 				<label for="date-end">Date</label>
 				<select name="date-end">
@@ -107,5 +98,7 @@
 		</form>
 	</div>
 	
-	
+{% endblock %}
+{% block scripts %}		
+	<script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
 {% endblock %}
