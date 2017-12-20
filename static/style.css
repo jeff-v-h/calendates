@@ -60,10 +60,30 @@ header {
 }
 
 /*
- * NEW EVENT FORM
+ * EVENT FORM
  */
 label {
 	width: 100px;
+}
+
+#event-info-wrapper {
+	display: flex;
+}
+
+#event-info {
+	flex-grow: 5;
+}
+
+#edit-btn {
+	flex-grow: 1;
+	height: 20px;
+}
+
+#edit-event {
+	visibility: hidden;
+	flex-grow: 4;
+	padding-left: 20px;
+	margin-top: 5px;
 }
 
 #end-date-container {

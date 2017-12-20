@@ -6,7 +6,7 @@
 {% block heading %} {{event.name}} {% endblock %}
 {% block main %}
 	<div id="event-info-wrapper">
-		<div>{{event.dates}}
+		<div id="event-info">
 			<p>Name: {{event.name}}</p>
 			<p>
 				Date/s: {{event.dates[0].date}} {{event.dates[0].month_name}} 
@@ -19,7 +19,6 @@
 			<p>Location: {% if event.city %}{{event.city}}, {% endif %}{{event.country}}</p>
 			{% endif %}
 		</div>
-		<button type="button">Edit</button>
 		<form action="{{url_for('eventInfo', event_id=event.id)}}" method="post" id="edit-event">
 			<div>
 				<label for="name">Name</label>
@@ -96,6 +95,7 @@
 			</div>
 			<button>Save</button>
 		</form>
+		<button type="button" id="edit-btn">Edit</button>
 	</div>
 	
 {% endblock %}
