@@ -80,13 +80,12 @@ def eventInfo(event_id):
 						while not allSame:
 							newDate = Date.query.filter_by(year=year, month=month, date=date).one()
 							newDates.append(newDate)
-							print newDates
 							if (year==yearEnd and month==monthEnd and date==dateEnd):
 								allSame = True
 							else:
 								year, month, date = getNextDate(year, month, date)
-								print year, month, date
-						event.dates[:] = newDates
+						event.dates = [] #needed to get rid of all dates, otherwise if overlap will cause dates not to be in order.
+						event.dates = newDates
 					else:
 						print "You need to make sure the 2nd date is after the first"
 				else: #just change 1 date
