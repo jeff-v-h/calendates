@@ -64,9 +64,9 @@ def eventInfo(event_id):
 			event.description = request.form['description']
 			event.country = request.form['country']
 			event.city = request.form['city']
-			year = request.form['year']
-			month = request.form['month']
-			date = request.form['date']
+			year = int(request.form['year'])
+			month = int(request.form['month'])
+			date = int(request.form['date'])
 			dateStart = Date.query.filter_by(year=year, month=month, date=date).one()
 			newDates = []
 			if dateStart: #make sure date is in database
@@ -76,14 +76,17 @@ def eventInfo(event_id):
 					dateEnd = int(request.form['date-end'])
 					dateIsAfter = checkDates(year, month, date, yearEnd, monthEnd, dateEnd)
 					if dateIsAfter:
-						while year!=yearEnd and month!=monthEnd and date!=dateEnd:
+						allSame = False
+						while not allSame:
 							newDate = Date.query.filter_by(year=year, month=month, date=date).one()
-							print "the newDate is " + newDate
 							newDates.append(newDate)
-							year, month, date = getNextDate(year, month, date)
-							print year, month, date
-						print newDates
-						event.dates = newDates
+							print newDates
+							if (year==yearEnd and month==monthEnd and date==dateEnd):
+								allSame = True
+							else:
+								year, month, date = getNextDate(year, month, date)
+								print year, month, date
+						event.dates[:] = newDates
 					else:
 						print "You need to make sure the 2nd date is after the first"
 				else: #just change 1 date
@@ -92,10 +95,8 @@ def eventInfo(event_id):
 					event.dates = newDates
 			else:
 				print "date not found, try a proper date. date not changed"
-			print "got to right before session.add"
 			db.session.add(event)
-			#db.session.commit()
-			print "Event info changed"
+			db.session.commit()
 			return redirect(url_for('events'))
 		else:
 			print "Event must have a name"

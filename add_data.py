@@ -102,7 +102,7 @@ def createPublicHolidays2018():
 	print "Added 2018 London public holidays."
 
 def addSportEvents2018():
-	ausOpen = Event(name='Australian Open', description='The first of four tennis grand slam tournamnets each year held in Australia.', country='Australia', city='Melbourne')
+	ausOpen = Event(name='Australian Open', description='The first of four tennis grand slam tournaments each year held in Australia.', country='Australia', city='Melbourne')
 	for x in range(15, 29):
 		date = Date.query.filter_by(year=2018, month=1, date=(x)).one()
 		ausOpen.dates.append(date)
