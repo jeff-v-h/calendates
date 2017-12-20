@@ -1,12 +1,7 @@
+import os
+from settings import app, db
 from flask import Flask, render_template, request, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
-from database_setup import db, Date, Event, events_dates
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///calendarevents.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-db.init_app(app)
+from database_setup import Date, Event, events_dates
 
 @app.route('/')
 @app.route('/calendates/', methods=['GET', 'POST'])
@@ -75,14 +70,15 @@ def eventInfo(event_id):
 			dateStart = Date.query.filter_by(year=year, month=month, date=date).one()
 			newDates = []
 			if dateStart: #make sure date is in database
-				if request.form.get('multiple-days', None): #change multiple dates
-					yearEnd = request.form['year-end']
-					monthEnd = request.form['month-end']
-					dateEnd = request.form['date-end']
+				if request.form.get('multiple-days'): #change multiple dates
+					yearEnd = int(request.form['year-end'])
+					monthEnd = int(request.form['month-end'])
+					dateEnd = int(request.form['date-end'])
 					dateIsAfter = checkDates(year, month, date, yearEnd, monthEnd, dateEnd)
 					if dateIsAfter:
 						while year!=yearEnd and month!=monthEnd and date!=dateEnd:
 							newDate = Date.query.filter_by(year=year, month=month, date=date).one()
+							print "the newDate is " + newDate
 							newDates.append(newDate)
 							year, month, date = getNextDate(year, month, date)
 							print year, month, date
@@ -91,6 +87,7 @@ def eventInfo(event_id):
 					else:
 						print "You need to make sure the 2nd date is after the first"
 				else: #just change 1 date
+					print "multiple days not ticked"
 					newDates.append(dateStart)
 					event.dates = newDates
 			else:
@@ -116,7 +113,8 @@ def checkDates(year1, month1, date1, year2, month2, date2):
 		elif month2 == month1:
 			if date2 > date1:
 				return True
-			return False
+			else:
+				return False
 		else:
 			return False
 	else: 

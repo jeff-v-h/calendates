@@ -1,4 +1,5 @@
-from database_setup import db, Date, Event, events_dates
+from settings import db
+from database_setup import Date, Event, events_dates
 from project import getDaysInMonth
 
 #function to add dates for whole year. Input the year and the day for the 1st of that year (eg. 'Monday')

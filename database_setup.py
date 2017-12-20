@@ -1,13 +1,5 @@
-import os
-import sys
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from settings import db
 from sqlalchemy.orm import relationship
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///calendarevents.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
 
 events_dates = db.Table('events_dates',
 	db.Column('date_id', db.Integer, db.ForeignKey('date.id'), primary_key=True),
