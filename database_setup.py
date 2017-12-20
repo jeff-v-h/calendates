@@ -13,8 +13,7 @@ class Date(db.Model):
 	month = db.Column(db.Integer)
 	month_name = db.Column(db.String(9))
 	date = db.Column(db.Integer)
-	day = db.Column(db.String(8))
-	events = db.relationship('Event', secondary=events_dates, lazy='subquery', backref=db.backref('dates'))
+	day = db.Column(db.String(8))	
 
 	def __repr__(self):
 		return '<Date %r, %r, %r>' % (self.year, self.month_name, self.date)
@@ -26,6 +25,7 @@ class Event(db.Model):
 	description = db.Column(db.String(1000))
 	country = db.Column(db.String(50))
 	city = db.Column(db.String(50))
+	dates = db.relationship('Date', secondary=events_dates, order_by=Date.id, lazy='subquery', backref=db.backref('events'))
 
 	def __repr__(self):
 		return '<Event %r>' % self.name
