@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block head %}
+	{{ super() }}
+{% endblock %}
+{% block title %} {{event.name}} {% endblock %}
+{% block heading %} {{event.name}} {% endblock %}
+{% block main %}
+	<div>
+		<h2>Location:</h2>
+		<div id="city-div">{{event.city}}</div>
+		<div id="country-div">{{event.country}}</div>
+	</div>
+	<div id="map"></div>
+{% endblock %}
+{% block scripts %}
+	<script type="text/javascript" src="{{ url_for('static', filename='libs/jquery-3.2.1.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='map.js') }}"></script>
+	<!--
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCup9ch8zCcZ6BAzwnp4RnC4f8L-FOkI-Y&callback=initMap"></script>
+	-->
+{% endblock %}

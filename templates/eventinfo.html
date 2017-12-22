@@ -100,7 +100,9 @@
 			<a href="{{url_for('deleteEvent', event_id=event.id)}}"><button type="button" id="delete-btn">Delete</button></a>
 		</div>	
 	</div>
-	
+	<div>
+		<a href="{{ url_for('map', event_id=event.id) }}"><button type="button">Map</button></a>
+	</div>
 {% endblock %}
 {% block scripts %}		
 	<script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>

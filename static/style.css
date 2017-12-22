@@ -115,3 +115,10 @@ textarea {
 	margin-left: 5px;
 }
 
+/*
+ * EVENT FORM
+ */
+#map {
+	height: 50%;
+	width: 50%;
+}
