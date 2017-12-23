@@ -9,23 +9,34 @@ function initMap() {
     });
 } */
 
-var city = $('#city-div').text();
-var country = $('#country-div').text();
+var city = $('#city-div').text().replace(/ +/g, "+");
+var country = $('#country-div').text().replace(/ +/g, "+");
 
 // AIzaSyDUqXmP7zeKMgsLSRCXTYqvUqLO2fux8xA API key for static map
-// https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=YOUR_API_KEY
 var url = "https://maps.googleapis.com/maps/api/staticmap";
-var apikey = "AIzaSyDUqXmP7zeKMgsLSRCXTYqvUqLO2fux8xA";
-// Need to replace spaces within city and country
-var geocode = "center=" + city + "," + country;
+var apikey = "key=" + "AIzaSyDUqXmP7zeKMgsLSRCXTYqvUqLO2fux8xA";
 var size = "size=600x300";
-var zoom = "zoom=10";
-url += '?' + geocode + '&' + zoom + '&' + size + '&key=' + apikey;
+var zoom = "zoom=";
+var geocode = "center=";
 
+if (country == '' && city == '') { // if both are empty
+	$('#location-title').after("<div>No location specified for this event</div>");
+	zoom += "1";
+	geocode += "0,0";
+} else if (city == '' && country != '') { // if there is only a country
+	zoom += "3";
+	geocode += country;
+} else if (city != '' && country == '') { //if there is only a city
+	zoom += "5";
+	geocode += city;
+} else { // else both city and country are named
+	zoom += "5";
+	geocode += city + "," + country;
+}
+
+url += '?' + geocode + '&' + zoom + '&' + size + '&' + apikey;
 var imgHTML = "<img src='" + url + "'>";
-
 $('#map').append(imgHTML);
 
-console.log(city + " " + country);
+console.log(geocode);
 console.log(url);
-
