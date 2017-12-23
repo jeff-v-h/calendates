@@ -49,7 +49,7 @@ def newEvent():
 			date = int(request.form['date'])
 			dateStart = Date.query.filter_by(year=year, month=month, date=date).one()
 			newDates = []
-			event = Event(name=request.form['name'], description=request.form['description'], country=request.form['country'], city=request.form['city'])
+			event = Event(name=request.form['name'], description=request.form['description'], country=request.form['country'], city=request.form['city'], locality=request.form['locality'])
 			if dateStart:
 				if request.form.get('multiple-days'): #change multiple dates
 					yearEnd = int(request.form['year-end'])
@@ -93,6 +93,7 @@ def eventInfo(event_id):
 			event.description = request.form['description']
 			event.country = request.form['country']
 			event.city = request.form['city']
+			event.locality = request.form['locality']
 			year = int(request.form['year'])
 			month = int(request.form['month'])
 			date = int(request.form['date'])
@@ -124,7 +125,7 @@ def eventInfo(event_id):
 				print "date not found, try a proper date. date not changed"
 			db.session.add(event)
 			db.session.commit()
-			return redirect(url_for('events'))
+			return redirect(url_for('eventinfo', event_id=event.id))
 		else:
 			print "Event must have a name"
 			return

@@ -15,8 +15,11 @@
 				{% endif %}
 			</p>
 			<p>Description: {{event.description}}</p>
-			{% if event.city or event.country %}
-			<p>Location: {% if event.city %}{{event.city}}, {% endif %}{{event.country}}</p>
+			{% if event.locality or event.city or event.country %}
+			<p>Location: 
+			{% if event.locality %} {{event.locality}}<br> {% endif %} 
+			{% if event.city %} {{event.city}}<br> {% endif %} 
+			{% if event.country %} {{event.country}} {% endif %}</p>
 			{% endif %}
 		</div>
 		<form action="{{url_for('eventInfo', event_id=event.id)}}" method="post" id="edit-event">
@@ -88,8 +91,10 @@
 				<textarea name="description" form="edit-event" maxlength="1000">{{event.description}}</textarea>
 			</div>
 			<div>
+				<label for="locality">Locality</label>
+				<input type="text" name="locality" value="{{event.locality}}"><br>
 				<label for="city">City</label>
-				<input type="text" name="city" value="{{event.city}}">
+				<input type="text" name="city" value="{{event.city}}"><br>
 				<label for="country">Country</label>
 				<input type="text" name="country" value="{{event.country}}">
 			</div>

@@ -5,10 +5,11 @@
 {% block title %} {{event.name}} {% endblock %}
 {% block heading %} {{event.name}} {% endblock %}
 {% block main %}
-	<div>
-		<h2 id="location-title">Location:</h2>
-		<div id="city-div">{{event.city}}</div>
-		<div id="country-div">{{event.country}}</div>
+	<div id="location-div">
+		<p>Location:</p>
+		<p id="locality-div">{{event.locality}}</p>
+		<p id="city-div">{{event.city}}</p>
+		<p id="country-div">{{event.country}}</p>
 	</div>
 	<div id="map"></div>
 {% endblock %}

@@ -1,5 +1,3 @@
-/*var city = document.getElementById('city-div').textContent;
-var country = document.getElementById('country-div').textContent;
 /* For javascript map -- faster net connection required
 var map;
 function initMap() {
@@ -20,7 +18,7 @@ var zoom = "zoom=";
 var geocode = "center=";
 
 if (country == '' && city == '') { // if both are empty
-	$('#location-title').after("<div>No location specified for this event</div>");
+	$('#location-div').append("<p>No location specified</p>");
 	zoom += "1";
 	geocode += "0,0";
 } else if (city == '' && country != '') { // if there is only a country
