@@ -72,6 +72,16 @@ label {
 
 #event-info {
 	flex-grow: 5;
+	font-size: 20px;
+}
+
+#location-div {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#location-div p {
+	margin: 0 20px 10px 0;
 }
 
 #edit-div {
@@ -116,18 +126,10 @@ textarea {
 }
 
 /*
- * EVENT FORM
+ * MAP 
  */
 #map {
 	height: 50%;
 	width: 50%;
 }
 
-#location-div {
-	display: flex;
-}
-
-#location-div p {
-	margin: 0 20px 10px 0;
-	font-size: 20px;
-}

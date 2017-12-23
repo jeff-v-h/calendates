@@ -9,18 +9,19 @@
 		<div id="event-info">
 			<p>Name: {{event.name}}</p>
 			<p>
-				Date/s: {{event.dates[0].date}} {{event.dates[0].month_name}} 
+				Date/s: {{event.dates[0].date}} {{event.dates[0].month_name}} {{event.dates[0].year}}
 				{% if event.dates[1] %}
-				 - {{event.dates[-1].date}} {{event.dates[-1].month_name}}
+				 - {{event.dates[-1].date}} {{event.dates[-1].month_name}} {{event.dates[-1].year}}
 				{% endif %}
+
 			</p>
 			<p>Description: {{event.description}}</p>
-			{% if event.locality or event.city or event.country %}
-			<p>Location: 
-			{% if event.locality %} {{event.locality}}<br> {% endif %} 
-			{% if event.city %} {{event.city}}<br> {% endif %} 
-			{% if event.country %} {{event.country}} {% endif %}</p>
-			{% endif %}
+			<div id="location-div">
+				<p>Location:</p>
+				<p id="locality-div">{{event.locality}}</p>
+				<p id="city-div">{{event.city}}</p>
+				<p id="country-div">{{event.country}}</p>
+			</div>
 		</div>
 		<form action="{{url_for('eventInfo', event_id=event.id)}}" method="post" id="edit-event">
 			<div>
@@ -106,9 +107,12 @@
 		</div>	
 	</div>
 	<div>
+		<div id="map"></div>
 		<a href="{{ url_for('map', event_id=event.id) }}"><button type="button">Map</button></a>
 	</div>
 {% endblock %}
-{% block scripts %}		
+{% block scripts %}
+	<script type="text/javascript" src="{{ url_for('static', filename='libs/jquery-3.2.1.min.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='map.js') }}"></script>
 {% endblock %}
