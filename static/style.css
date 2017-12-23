@@ -59,6 +59,10 @@ header {
 	padding: 0 20px 100px;
 }
 
+button {
+	width: 50px;
+}
+
 /*
  * EVENT FORM
  */
@@ -71,8 +75,7 @@ label {
 }
 
 #event-info {
-	flex-grow: 5;
-	font-size: 20px;
+	flex-grow: 4;
 }
 
 #location-div {
@@ -94,9 +97,13 @@ label {
 	margin-top: 10px;
 }
 
+#top-form-box {
+	display: flex;
+}
+
 #edit-event {
-	visibility: hidden;
-	flex-grow: 4;
+	display: none;
+	visibility: visible;
 	padding-left: 20px;
 	margin-top: 5px;
 }
@@ -120,7 +127,7 @@ input, select {
 
 textarea {
 	width: 250px;
-	height: 120px;
+	height: 150px;
 	resize: none;
 	margin-left: 5px;
 }
@@ -133,3 +140,6 @@ textarea {
 	width: 50%;
 }
 
+#map img {
+	margin-top: 20px;
+}

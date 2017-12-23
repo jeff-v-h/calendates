@@ -11,10 +11,10 @@
 
 	document.getElementById('edit-btn').addEventListener('click', function() {
 		var editForm = document.getElementById('edit-event');
-		if (editForm.style.visibility == 'visible') {
-			editForm.style.visibility = 'hidden';
+		if (editForm.style.display == 'block') {
+			editForm.style.display = 'none';
 		} else {
-			editForm.style.visibility = 'visible';
+			editForm.style.display = 'block';
 		};
 	});
 
