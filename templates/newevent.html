@@ -5,7 +5,7 @@
 {% block title %} New Event {% endblock %}
 {% block heading %} New Event {% endblock %}
 {% block main %}
-	
+<div id="new-event-page">
 	<form action="{{url_for('newEvent')}}" method="post" id="new-event">
 		<label for="name">Name</label>
 		<input type="text" name="name"><br>
@@ -67,8 +67,9 @@
 		<button>Create</button>
 	</form>
 	<a href="{{url_for('events')}}"><button>Cancel</button></a>
-	
+</div>	
 {% endblock %}
-{% block scripts %}		
+{% block scripts %}	
+	<script type="text/javascript" src="{{ url_for('static', filename='libs/jquery-3.2.1.min.js') }}"></script>	
 	<script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
 {% endblock %}

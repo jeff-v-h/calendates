@@ -11,11 +11,11 @@
 		<p id="city-div">{{event.city}}</p>
 		<p id="country-div">{{event.country}}</p>
 	</div>
-	<div id="map"></div>
+	<div id="map">Insert Javascript map here</div>
 {% endblock %}
 {% block scripts %}
 	<script type="text/javascript" src="{{ url_for('static', filename='libs/jquery-3.2.1.min.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='map.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
 	<!--
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCup9ch8zCcZ6BAzwnp4RnC4f8L-FOkI-Y&callback=initMap"></script>
 	-->
