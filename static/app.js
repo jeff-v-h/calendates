@@ -20,29 +20,49 @@ function initMap() {} // placed here as it must be in global scope to work.
 		$('#maps-btn').click(function() {
 			maps.toggle('slow');
 		});
-		
 
-		// load javascript interactive map
-		initMap = function() {
-			var event = {lat: -25.344877, lng: 131.032854};
-			var map = new google.maps.Map(document.getElementById('map-js'), {
-		      center: event,
-		      zoom: 4
-		    });
-		    var marker = new google.maps.Marker({
-		    	position: event,
-		    	map: map
-		    });
-		};
 
-		// load static maps to be used as reference with js map
 		var locality = $('#locality-div').text().replace(/ +/g, "+");
 		var city = $('#city-div').text().replace(/ +/g, "+");
 		var country = $('#country-div').text().replace(/ +/g, "+");
+		
 
-		// AIzaSyDUqXmP7zeKMgsLSRCXTYqvUqLO2fux8xA API key for static map
+		// load javascript interactive map
+		var geocoder;
+		var map;
+		initMap = function() {
+			geocoder = new google.maps.Geocoder();
+			var eventlatlng = {lat: 0, lng: 0};
+			//{lat: -25.344877, lng: 131.032854};
+			map = new google.maps.Map(document.getElementById('map-js'), {
+		      center: eventlatlng,
+		      zoom: 4
+		    });
+		    codeAddress();
+		};
+
+		function codeAddress() {
+			// add commas using if else staements
+			var address = locality + ',' + city + ',' + country;
+			console.log("address is " + address);
+			geocoder.geocode( { 'address': address}, function(results, status) {
+				console.log('status is ' + status);
+				if (status == 'OK') {
+					map.setCenter(results[0].geometry.location);
+			        var marker = new google.maps.Marker({
+			            map: map,
+			            position: results[0].geometry.location
+			        });
+				} else {
+					console.log('Geocode was not successful for the following reason: ' + status);
+				}
+			});
+		}
+
+		// load static maps to be used as reference with js map
+		// AIzaSyCup9ch8zCcZ6BAzwnp4RnC4f8L-FOkI-Y API key for google maps
 		var url = "https://maps.googleapis.com/maps/api/staticmap";
-		var apikey = "key=" + "AIzaSyDUqXmP7zeKMgsLSRCXTYqvUqLO2fux8xA";
+		var apikey = "key=" + "AIzaSyCup9ch8zCcZ6BAzwnp4RnC4f8L-FOkI-Y";
 		var size = "size=600x400";
 		var zoom = "zoom=";
 		var geocode = "center=";
