@@ -135,11 +135,15 @@ textarea {
 /*
  * MAP 
  */
-#map {
-	height: 50%;
-	width: 50%;
+#maps {
+	height: 100%;
+	width: 100%;
+}
+#map-js {
+	height: 400px;
+	width: 600px;
 }
 
-#map img {
+#maps img {
 	margin-top: 20px;
 }

@@ -5,18 +5,20 @@
 {% block title %} {{event.name}} {% endblock %}
 {% block heading %} {{event.name}} {% endblock %}
 {% block main %}
+<div id="map-page">
 	<div id="location-div">
 		<p>Location:</p>
 		<p id="locality-div">{{event.locality}}</p>
 		<p id="city-div">{{event.city}}</p>
 		<p id="country-div">{{event.country}}</p>
 	</div>
-	<div id="map">Insert Javascript map here</div>
+	<div id="map-js"></div>
+</div>
 {% endblock %}
 {% block scripts %}
 	<script type="text/javascript" src="{{ url_for('static', filename='libs/jquery-3.2.1.min.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
-	<!--
+	
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCup9ch8zCcZ6BAzwnp4RnC4f8L-FOkI-Y&callback=initMap"></script>
-	-->
+	
 {% endblock %}

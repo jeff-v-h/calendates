@@ -111,8 +111,10 @@
 		</div>
 		<button>Save</button>
 	</form>
+	<div id="maps">
+		<div id="map-js"></div>
+	</div>	
 	<div>
-		<div id="map"></div>
 		<a href="{{ url_for('map', event_id=event.id) }}"><button type="button">Map</button></a>
 	</div>
 </div>
@@ -120,4 +122,5 @@
 {% block scripts %}
 	<script type="text/javascript" src="{{ url_for('static', filename='libs/jquery-3.2.1.min.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCup9ch8zCcZ6BAzwnp4RnC4f8L-FOkI-Y&callback=initMap"></script>
 {% endblock %}
