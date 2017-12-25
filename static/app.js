@@ -2,27 +2,26 @@ function initMap() {} // placed here as it must be in global scope to work.
 (function() {
 
 	if ($('div').is('#event-info-page') || $('div').is('#new-event-page')) {
-		document.getElementById('end-date-checkbox').addEventListener('click', function() {
-			var endDateContainer = document.getElementById('end-date-container');
-			if (this.checked) {
-				endDateContainer.style.display = 'block';
-			} else {
-				endDateContainer.style.display = 'none';
-			}
+
+		$('#end-date-checkbox').click(function() {
+			$('#end-date-container').toggle('fast');
 		});
 
-		document.getElementById('edit-btn').addEventListener('click', function() {
-			var editForm = document.getElementById('edit-event');
-			if (editForm.style.display == 'block') {
-				editForm.style.display = 'none';
-			} else {
-				editForm.style.display = 'block';
-			}
+		$('#edit-btn').click(function() {
+			$('#edit-event').toggle('fast');
 		});
+
 	}
 
 	// Load this javascript if page is eventinfo
 	if ($('div').is('#event-info-page')) {
+		//toggle display of static maps
+		var maps = $('#maps');
+		$('#maps-btn').click(function() {
+			maps.toggle('slow');
+		});
+		
+
 		// load javascript interactive map
 		initMap = function() {
 			var event = {lat: -25.344877, lng: 131.032854};
@@ -49,7 +48,6 @@ function initMap() {} // placed here as it must be in global scope to work.
 		var geocode = "center=";
 		var marker = "markers=color:red%7C";
 		var imgHTML;
-		var maps = $('#maps');
 
 		if (country == '' && city == '') { // if both are empty
 			$('#location-div').append("<p>No location specified</p>");
@@ -99,10 +97,6 @@ function initMap() {} // placed here as it must be in global scope to work.
 
 		console.log(geocode);
 		console.log(url);
-	}
-
-	if ($('div').is('#map-page')) {
-		
 	}
 
 })();

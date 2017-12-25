@@ -111,11 +111,10 @@
 		</div>
 		<button>Save</button>
 	</form>
-	<div id="maps">
-		<div id="map-js"></div>
-	</div>	
 	<div>
-		<a href="{{ url_for('map', event_id=event.id) }}"><button type="button">Map</button></a>
+		<button type="button" id="maps-btn">Static Maps</button>
+		<div id="map-js"></div>
+		<div id="maps"></div>		
 	</div>
 </div>
 {% endblock %}

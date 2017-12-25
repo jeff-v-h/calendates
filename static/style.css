@@ -137,13 +137,18 @@ textarea {
  */
 #maps {
 	height: 100%;
-	width: 100%;
+	display: none;
 }
+
+#maps-btn {
+	float: right;
+}
+
 #map-js {
 	height: 400px;
 	width: 600px;
 }
 
-#maps img {
+#maps, #maps img {
 	margin-top: 20px;
 }

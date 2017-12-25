@@ -142,10 +142,6 @@ def deleteEvent(event_id):
 	else:
 		return render_template('deleteevent.html', event=event)
 
-@app.route('/calendates/events/<int:event_id>/map/', methods=['GET', 'POST'])
-def map(event_id):
-	event = Event.query.filter_by(id=event_id).one()
-	return render_template('map.html', event=event)
 
 # function to check if 2nd date is after first 
 def checkDates(year1, month1, date1, year2, month2, date2):
