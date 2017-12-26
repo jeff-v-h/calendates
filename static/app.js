@@ -25,7 +25,71 @@ function initMap() {} // placed here as it must be in global scope to work.
 		var locality = $('#locality-div').text().replace(/ +/g, "+");
 		var city = $('#city-div').text().replace(/ +/g, "+");
 		var country = $('#country-div').text().replace(/ +/g, "+");
-		
+
+		// load static maps to be used as reference with js map
+		// AIzaSyCup9ch8zCcZ6BAzwnp4RnC4f8L-FOkI-Y API key for google maps
+		var url = "https://maps.googleapis.com/maps/api/staticmap";
+		var apikey = "key=" + "AIzaSyCup9ch8zCcZ6BAzwnp4RnC4f8L-FOkI-Y";
+		var size = "size=600x400";
+		var zoom = "zoom=";
+		// var address also to be used in javascript maps, so var center will concatenate it
+		var center = "center=";
+		var address = ""; 
+		var marker = "markers=color:red%7C";
+		var imgHTML;
+
+		if (country == '' && city == '') { // if both are empty
+			$('#location-div').append("<p>No location specified</p>");
+			zoom += "1";
+			address += "0,0";
+			marker = "";
+			center += address;
+		} else if (city == '' && country != '') { // if there is only a country
+			zoom += "3";
+			address += country;
+			marker = "";
+			center += address;
+		} else if (city != '' && country == '') { //if there is only a city
+			if (locality != '') { // locality alos named, so append a map of that first
+				zoom += "14";
+				address += locality + "," + city;
+				marker += locality + "," + city;
+				center += address;
+				// append map for locality
+				url += '?' + center + '&' + zoom + '&' + size + '&' + marker + '&' + apikey;
+				imgHTML = "<img src='" + url + "'>";
+				maps.append(imgHTML);
+			}
+			// reinitialise each varibale since it has already been appended with locality
+			url = "https://maps.googleapis.com/maps/api/staticmap";
+			zoom = "zoom=6";
+			center = "center=" + city;
+			marker = "markers=color:red%7C" + city;
+		} else { // else both city and country are named
+			if (locality != '') { //locality also named > append maps for locality and city
+				zoom += "14";
+				address += locality + "," + city + "," + country;
+				marker += locality + "," + city + "," + country;
+				center += address;
+				// append map for locality
+				url += '?' + center + '&' + zoom + '&' + size + '&' + marker + '&' + apikey;
+				imgHTML = "<img src='" + url + "'>";
+				maps.append(imgHTML);
+				//append map for city
+			} 
+			// reinitialise each varibale since it has already been appended with locality
+			zoom = "zoom=6";
+			center = "center=" + city + "," + country;
+			marker = "markers=color:red%7C" + city + "," + country;
+			url = "https://maps.googleapis.com/maps/api/staticmap";
+		}
+
+		url += '?' + center + '&' + zoom + '&' + size + '&' + marker + '&' + apikey;
+		imgHTML = "<img src='" + url + "'>";
+		maps.append(imgHTML);
+
+		console.log("center is " + center);
+		console.log(url);
 
 		// load javascript interactive map
 		var geocoder;
@@ -43,10 +107,8 @@ function initMap() {} // placed here as it must be in global scope to work.
 
 		function codeAddress() {
 			// add commas using if else staements
-			var address = locality + ',' + city + ',' + country;
 			console.log("address is " + address);
 			geocoder.geocode( { 'address': address}, function(results, status) {
-				console.log('status is ' + status);
 				if (status == 'OK') {
 					map.setCenter(results[0].geometry.location);
 			        var marker = new google.maps.Marker({
@@ -58,65 +120,6 @@ function initMap() {} // placed here as it must be in global scope to work.
 				}
 			});
 		}
-
-		// load static maps to be used as reference with js map
-		// AIzaSyCup9ch8zCcZ6BAzwnp4RnC4f8L-FOkI-Y API key for google maps
-		var url = "https://maps.googleapis.com/maps/api/staticmap";
-		var apikey = "key=" + "AIzaSyCup9ch8zCcZ6BAzwnp4RnC4f8L-FOkI-Y";
-		var size = "size=600x400";
-		var zoom = "zoom=";
-		var geocode = "center=";
-		var marker = "markers=color:red%7C";
-		var imgHTML;
-
-		if (country == '' && city == '') { // if both are empty
-			$('#location-div').append("<p>No location specified</p>");
-			zoom += "1";
-			geocode += "0,0";
-			marker = "";
-		} else if (city == '' && country != '') { // if there is only a country
-			zoom += "3";
-			geocode += country;
-			marker = "";
-		} else if (city != '' && country == '') { //if there is only a city
-			if (locality != '') { // locality alos named, so append a map of that first
-				zoom += "14";
-				geocode += locality + "," + city;
-				marker += locality + "," + city;
-				// append map for locality
-				url += '?' + geocode + '&' + zoom + '&' + size + '&' + marker + '&' + apikey;
-				imgHTML = "<img src='" + url + "'>";
-				maps.append(imgHTML);
-			}
-			// reinitialise each varibale since it has already been appended with locality
-			url = "https://maps.googleapis.com/maps/api/staticmap";
-			zoom = "zoom=6";
-			geocode = "center=" + city;
-			marker = "markers=color:red%7C" + city;
-		} else { // else both city and country are named
-			if (locality != '') { //locality also named > append maps for locality and city
-				zoom += "14";
-				geocode += locality + "," + city + "," + country;
-				marker += locality + "," + city + "," + country;
-				// append map for locality
-				url += '?' + geocode + '&' + zoom + '&' + size + '&' + marker + '&' + apikey;
-				imgHTML = "<img src='" + url + "'>";
-				maps.append(imgHTML);
-				//append map for city
-			} 
-			// reinitialise each varibale since it has already been appended with locality
-			zoom = "zoom=6";
-			geocode = "center=" + city + "," + country;
-			marker = "markers=color:red%7C" + city + "," + country;
-			url = "https://maps.googleapis.com/maps/api/staticmap";
-		}
-
-		url += '?' + geocode + '&' + zoom + '&' + size + '&' + marker + '&' + apikey;
-		imgHTML = "<img src='" + url + "'>";
-		maps.append(imgHTML);
-
-		console.log(geocode);
-		console.log(url);
 	}
 
 })();
