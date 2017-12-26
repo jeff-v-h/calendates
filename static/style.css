@@ -64,6 +64,14 @@ button {
 }
 
 /*
+ * YOUTUBE
+ */
+#player {
+	width: 600px;
+	height: 400px;
+}
+
+/*
  * EVENT FORM
  */
 label {

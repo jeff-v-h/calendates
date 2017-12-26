@@ -1,4 +1,7 @@
-function initMap() {} // placed here as it must be in global scope to work.
+// Following 2 functions placed here as it must be in global scope to work.
+function initMap() {} 
+function onYouTubeIframeAPIReady() {}
+
 (function() {
 
 	if ($('div').is('#event-info-page') || $('div').is('#new-event-page')) {
@@ -15,7 +18,46 @@ function initMap() {} // placed here as it must be in global scope to work.
 
 	// Load this javascript if page is eventinfo
 	if ($('div').is('#event-info-page')) {
-		//toggle display of static maps
+		// Load Youtube iframe and video player with API
+		var tag = document.createElement('script');
+		tag.src = "https://www.youtube.com/iframe_api";
+		var firstScriptTag = document.getElementsByTagName('script')[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+		// Create an <iframe> (and YouTube player) after the API code downloads.
+		var player;
+		onYouTubeIframeAPIReady = function() {
+			player = new YT.Player('player', {
+				height: '390',
+				width: '640',
+				videoId: 'MjO1HdcbMuc',
+				events: {
+					'onReady': onPlayerReady,
+					'onStateChange': onPlayerStateChange
+				}
+			});
+		}
+
+		// The API will call this function when the video player is ready.
+		function onPlayerReady(event) {
+			event.target.playVideo();
+		}
+
+		// The API calls this function when the player's state changes. The function indicates that when playing a video (state=1), the player should play for six seconds and then stop.
+		var done = false;
+		function onPlayerStateChange(event) {
+			if (event.data == YT.PlayerState.PLAYING && !done) {
+				setTimeout(stopVideo, 6000);
+				done = true;
+			}
+		}
+
+		function stopVideo() {
+			player.stopVideo();
+		}
+
+
+		// toggle display of static maps
 		var maps = $('#maps');
 		$('#maps-btn').click(function() {
 			maps.toggle('slow');
@@ -88,9 +130,6 @@ function initMap() {} // placed here as it must be in global scope to work.
 		imgHTML = "<img src='" + url + "'>";
 		maps.append(imgHTML);
 
-		console.log("center is " + center);
-		console.log(url);
-
 		// load javascript interactive map
 		var geocoder;
 		var map;
@@ -106,8 +145,6 @@ function initMap() {} // placed here as it must be in global scope to work.
 		};
 
 		function codeAddress() {
-			// add commas using if else staements
-			console.log("address is " + address);
 			geocoder.geocode( { 'address': address}, function(results, status) {
 				if (status == 'OK') {
 					map.setCenter(results[0].geometry.location);
