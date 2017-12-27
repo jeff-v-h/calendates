@@ -6,9 +6,11 @@
 {% block heading %} {{event.name}} {% endblock %}
 {% block main %}
 <div id="event-info-page">
+	{% if event.youtube %}
 	<div>
 		<div id="player"></div>
 	</div>
+	{% endif %}
 	<div id="event-info-wrapper">
 		<div id="event-info">
 			<p>Name: {{event.name}}</p>
@@ -20,6 +22,9 @@
 
 			</p>
 			<p>Description: {{event.description}}</p>
+			{% if event.url %}
+			<p>Additional info: <a href="{{event.url}}">{{event.url}}</a></p>
+			{% endif %}
 			<div id="location-div">
 				<p>Location:</p>
 				<p id="locality-div">{{event.locality}}</p>
@@ -112,13 +117,21 @@
 			<label for="country">Country</label>
 			<input type="text" name="country" value="{{event.country}}">
 		</div>
+		<div>
+			<label for="url">URL</label>
+			<input type="text" name="url" value="{{event.url}}">
+			<label for="youtube">Youtube Video ID</label>
+			<input type="text" name="youtube" value="{{event.youtube}}" id="youtube-input">
+		</div>
 		<button>Save</button>
 	</form>
+	{% if event.locality or event.city or event.city %}
 	<div>
 		<button type="button" id="maps-btn">Static Maps</button>
 		<div id="map-js"></div>
 		<div id="maps"></div>		
 	</div>
+	{% endif %}
 </div>
 {% endblock %}
 {% block scripts %}

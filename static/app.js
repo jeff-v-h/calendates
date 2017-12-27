@@ -18,7 +18,10 @@ function onYouTubeIframeAPIReady() {}
 
 	// Load this javascript if page is eventinfo
 	if ($('div').is('#event-info-page')) {
-		// Load Youtube iframe and video player with API
+		/* 
+		* LOAD YOUTUBE PLAYER
+		*/
+		// Load Youtube iframe and video player
 		var tag = document.createElement('script');
 		tag.src = "https://www.youtube.com/iframe_api";
 		var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -27,10 +30,11 @@ function onYouTubeIframeAPIReady() {}
 		// Create an <iframe> (and YouTube player) after the API code downloads.
 		var player;
 		onYouTubeIframeAPIReady = function() {
+			var youtubeID = $('#youtube-input').val();
 			player = new YT.Player('player', {
 				height: '390',
 				width: '640',
-				videoId: 'MjO1HdcbMuc',
+				videoId: youtubeID,
 				events: {
 					'onReady': onPlayerReady,
 					'onStateChange': onPlayerStateChange
@@ -68,7 +72,9 @@ function onYouTubeIframeAPIReady() {}
 		var city = $('#city-div').text().replace(/ +/g, "+");
 		var country = $('#country-div').text().replace(/ +/g, "+");
 
-		// load static maps to be used as reference with js map
+		/* 
+		* LOAD GOOGLE STATIC MAPS: use as reference with js map
+		*/
 		// AIzaSyCup9ch8zCcZ6BAzwnp4RnC4f8L-FOkI-Y API key for google maps
 		var url = "https://maps.googleapis.com/maps/api/staticmap";
 		var apikey = "key=" + "AIzaSyCup9ch8zCcZ6BAzwnp4RnC4f8L-FOkI-Y";
@@ -130,13 +136,15 @@ function onYouTubeIframeAPIReady() {}
 		imgHTML = "<img src='" + url + "'>";
 		maps.append(imgHTML);
 
-		// load javascript interactive map
+
+		/* 
+		* LOAD GOOGLE JAVASCRIPT INTERACTIVE MAP
+		*/
 		var geocoder;
 		var map;
 		initMap = function() {
 			geocoder = new google.maps.Geocoder();
 			var eventlatlng = {lat: 0, lng: 0};
-			//{lat: -25.344877, lng: 131.032854};
 			map = new google.maps.Map(document.getElementById('map-js'), {
 		      center: eventlatlng,
 		      zoom: 4

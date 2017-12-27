@@ -49,9 +49,9 @@ def newEvent():
 			date = int(request.form['date'])
 			dateStart = Date.query.filter_by(year=year, month=month, date=date).one()
 			newDates = []
-			event = Event(name=request.form['name'], description=request.form['description'], country=request.form['country'], city=request.form['city'], locality=request.form['locality'])
+			event = Event(name=request.form['name'], description=request.form['description'], country=request.form['country'], city=request.form['city'], locality=request.form['locality'], url=request.form['url'], youtube=request.form['youtube'])
 			if dateStart:
-				if request.form.get('multiple-days'): #change multiple dates
+				if request.form.get('multiple-days'): #if multiple days checkbox is ticked, add multiple dates
 					yearEnd = int(request.form['year-end'])
 					monthEnd = int(request.form['month-end'])
 					dateEnd = int(request.form['date-end'])
@@ -94,6 +94,8 @@ def eventInfo(event_id):
 			event.country = request.form['country']
 			event.city = request.form['city']
 			event.locality = request.form['locality']
+			event.url = request.form['url']
+			event.youtube = request.form['youtube']
 			year = int(request.form['year'])
 			month = int(request.form['month'])
 			date = int(request.form['date'])
@@ -125,7 +127,7 @@ def eventInfo(event_id):
 				print "date not found, try a proper date. date not changed"
 			db.session.add(event)
 			db.session.commit()
-			return redirect(url_for('eventinfo', event_id=event.id))
+			return redirect(url_for('eventInfo', event_id=event.id))
 		else:
 			print "Event must have a name"
 			return

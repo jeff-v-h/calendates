@@ -26,6 +26,8 @@ class Event(db.Model):
 	country = db.Column(db.String(50))
 	city = db.Column(db.String(50))
 	locality = db.Column(db.String(50))
+	url = db.Column(db.String(500))
+	youtube = db.Column(db.String(50))
 	dates = db.relationship('Date', secondary=events_dates, order_by=Date.id, lazy='subquery', backref=db.backref('events'))
 
 	def __repr__(self):

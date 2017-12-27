@@ -58,12 +58,20 @@
 			</div>
 			<textarea name="description" form="new-event" maxlength="1000" ></textarea>
 		</div>
-		<label for="locality">Locality</label>
-		<input type="text" name="locality">
-		<label for="city">City</label>
-		<input type="text" name="city">
-		<label for="country">Country</label>
-		<input type="text" name="country"><br>
+		<div>
+			<label for="locality">Locality</label>
+			<input type="text" name="locality">
+			<label for="city">City</label>
+			<input type="text" name="city">
+			<label for="country">Country</label>
+			<input type="text" name="country">
+		</div>
+		<div>
+			<label for="url">URL</label>
+			<input type="text" name="url">
+			<label for="youtube">Youtube Video ID</label>
+			<input type="text" name="youtube">
+		</div>
 		<button>Create</button>
 	</form>
 	<a href="{{url_for('events')}}"><button>Cancel</button></a>

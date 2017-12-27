@@ -74,6 +74,10 @@ button {
 /*
  * EVENT FORM
  */
+form {
+	margin-bottom: 20px;
+}
+
 label {
 	width: 100px;
 }
